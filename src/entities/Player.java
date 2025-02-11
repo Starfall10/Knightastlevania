@@ -1,5 +1,7 @@
 package entities;
 
+import utilz.LoadSave;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -77,6 +79,8 @@ public class Player extends Entity{
         aniIndex = 0;
     }
 
+
+
     public void updatePos() {
 
         moving = false;
@@ -100,29 +104,15 @@ public class Player extends Entity{
     }
 
     private void loadAnimation() {
-        InputStream is = getClass().getResourceAsStream("/player_sprites.png");
-        try {
-            assert is != null;
-            BufferedImage img = ImageIO.read(is);
+        BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.PLAYER_ATLAS);
 
-            animations = new BufferedImage[9][6];
-            for (int j =0 ; j < animations.length; j++) {
-                for (int i = 0; i < animations[j].length;i++) {
-                    animations[j][i] = img.getSubimage(i*64,j*40,64,40);
-                }
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                assert is != null;
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        animations = new BufferedImage[9][6];
+        for (int j =0 ; j < animations.length; j++) {
+            for (int i = 0; i < animations[j].length;i++) {
+                animations[j][i] = img.getSubimage(i*64,j*40,64,40);
             }
         }
+
     }
 
     public void resetDirBooleans() {
