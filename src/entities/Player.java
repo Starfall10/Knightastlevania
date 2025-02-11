@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static main.Game.SCALE;
 import static utilz.Constants.Directions.*;
 import static utilz.Constants.Directions.DOWN;
 import static utilz.Constants.PlayerConstants.*;
@@ -37,7 +38,7 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][aniIndex],(int)x,(int)y, 64,40,null);
+        g.drawImage(animations[playerAction][aniIndex],(int)x,(int)y, (int)(64*SCALE),(int)(40*SCALE),null);
     }
 
 
