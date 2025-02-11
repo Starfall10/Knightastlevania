@@ -37,7 +37,7 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][aniIndex],(int)x,(int)y, 256,160,null);
+        g.drawImage(animations[playerAction][aniIndex],(int)x,(int)y, 64,40,null);
     }
 
 
