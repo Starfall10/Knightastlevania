@@ -14,19 +14,16 @@ import static utilz.Constants.Directions.DOWN;
 import static utilz.Constants.PlayerConstants.*;
 
 public class Player extends Entity{
-
     private BufferedImage[][] animations;
     private int aniTick, aniIndex, aniSpeed = 15;
     private int playerAction = IDLE;
-    private boolean left, up, right, down;
-    private int playerSpeed = 2;
-
-
     private boolean moving = false, attacking = false;
+    private boolean left, up, right, down;
+    private float playerSpeed = 2f;
 
 
-    public Player(float x, float y) {
-        super(x, y);
+    public Player(float x, float y, int width, int height) {
+        super(x, y, width, height);
         loadAnimation();
 
     }
@@ -38,7 +35,7 @@ public class Player extends Entity{
     }
 
     public void render(Graphics g) {
-        g.drawImage(animations[playerAction][aniIndex],(int)x,(int)y, (int)(64*SCALE),(int)(40*SCALE),null);
+        g.drawImage(animations[playerAction][aniIndex],(int)x,(int)y, (int)(width),(int)(height),null);
     }
 
 
