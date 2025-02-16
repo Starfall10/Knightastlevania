@@ -1,6 +1,7 @@
 package main;
 
 import entities.Player;
+import gamestates.Gamestate;
 import levels.LevelManager;
 
 import java.awt.*;
@@ -44,13 +45,26 @@ public class Game implements Runnable{
     }
 
     public void update() {
-        player.update();
-        levelManager.update();
+        switch(Gamestate.state) {
+            case MENU -> {
+            }
+            case PLAYING -> {
+                player.update();
+                levelManager.update();
+            }
+        }
+
     }
 
     public void render(Graphics g) {
-        levelManager.draw(g);
-        player.render(g);
+        switch(Gamestate.state) {
+            case MENU -> {
+            }
+            case PLAYING -> {
+                levelManager.draw(g);
+                player.render(g);
+            }
+        }
 
     }
 
