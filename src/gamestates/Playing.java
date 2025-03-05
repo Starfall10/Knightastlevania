@@ -1,5 +1,6 @@
 package gamestates;
 
+import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
@@ -17,6 +18,7 @@ import static utilz.Constants.Environmental.*;
 public class Playing extends State implements Statemethods{
     private Player player;
     private LevelManager levelManager;
+    private EnemyManager enemyManager;
     private PauseOverlay pauseOverlay;
     private boolean paused = false;
 
@@ -46,6 +48,7 @@ public class Playing extends State implements Statemethods{
 
     private void initClasses() {
         levelManager = new LevelManager(game);
+        enemyManager = new EnemyManager(this);
         player = new Player(200,200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
         player.loadLvlData(levelManager.getCurrentLevel().getLvlData());
         pauseOverlay = new PauseOverlay(this);
@@ -58,7 +61,7 @@ public class Playing extends State implements Statemethods{
         if(!paused) {
             levelManager.update();
             player.update();
-
+            enemyManager.update();
         }
         else {
             pauseOverlay.update();
@@ -68,15 +71,17 @@ public class Playing extends State implements Statemethods{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(backgroundImg, 0,0,Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+
         drawClouds(g);
+
         levelManager.draw(g, xLvlOffset);
         player.render(g, xLvlOffset);
-        checkCloseToBorer();
+        enemyManager.draw(g, xLvlOffset);
 
-        if(paused) {
+        if (paused) {
             g.setColor(new Color(0, 0, 0, 150));
-            g.fillRect(0,0,Game.GAME_WIDTH, Game.GAME_HEIGHT);
+            g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
             pauseOverlay.draw(g);
         }
     }
