@@ -57,19 +57,32 @@ public abstract class Enemy extends Entity {
         changeWalkDir();
     }
 
+    protected void turnTowardsPlayer(Player player) {
+        if(player.hitbox.x > hitbox.x)
+            walkDir = RIGHT;
+        else
+            walkDir = LEFT;
+    }
+
     protected boolean canSeePlayer(int[][] lvlData, Player player) {
         int playerTileY = (int) (player.getHitbox().y / Game.TILES_SIZE);
-        if(playerTileY == tileY)
-            if(isPlayerInRange(player)) {
-                if(isSightClear(lvlData,hitbox,player.hitbox, tileY))
+        if (playerTileY == tileY)
+            if (isPlayerInRange(player)) {
+                if (IsSightClear(lvlData, hitbox, player.hitbox, tileY))
                     return true;
             }
+
         return false;
     }
 
-    private boolean isPlayerInRange(Player player) {
+    protected boolean isPlayerInRange(Player player) {
         int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
         return absValue <= attackDistance * 5;
+    }
+
+    protected boolean isPlayerCloseForAttack (Player player) {
+        int absValue = (int) Math.abs(player.hitbox.x - hitbox.x);
+        return absValue <= attackDistance;
     }
 
 
@@ -87,6 +100,8 @@ public abstract class Enemy extends Entity {
             aniIndex++;
             if (aniIndex >= GetSpriteAmount(enemyType, enemyState)) {
                 aniIndex = 0;
+                if(enemyState == ATTACK)
+                    enemyState = IDLE;
             }
         }
     }

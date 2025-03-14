@@ -61,7 +61,7 @@ public class Playing extends State implements Statemethods{
         if(!paused) {
             levelManager.update();
             player.update();
-            enemyManager.update(levelManager.getCurrentLevel().getLvlData());
+            enemyManager.update(levelManager.getCurrentLevel().getLvlData(), player);
             checkCloseToBorer();
         }
         else {
